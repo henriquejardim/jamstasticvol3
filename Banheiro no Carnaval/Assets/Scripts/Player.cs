@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-		if (PlayerInActiveSection ()) {
+		if (PlayerInActiveSection () && OnGround()) {
 			if (Input.GetAxisRaw ("Vertical") >= 0.5f && Pista.FaixaAtual > 1) {
 				Pista.FaixaAtual--;
 			} else if (Input.GetAxisRaw ("Vertical") <= -0.5f && Pista.FaixaAtual < 4) {

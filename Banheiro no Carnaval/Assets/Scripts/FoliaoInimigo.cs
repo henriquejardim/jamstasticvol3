@@ -26,16 +26,19 @@ public class FoliaoInimigo : MonoBehaviour {
 	public bool CanSwitch;
 	public float DistanceToSwitch = 4;
 	public FoliaoType SwitchToType;
+	public float ReducaoTempo = 4;
 	//Excluisivo para movimentação entre pontos
 	[SerializeField]
 	private int followPoint = 4;
 	private float startTime;
+	private GameManagement gameManagement;
 	void Start () {
 		player = (Player) FindObjectOfType (typeof (Player));
 		if (Tipo == FoliaoType.EntrePontos) {
 			IsActive = true;
 			startTime = Time.time;
 		}
+		gameManagement = (GameManagement)FindObjectOfType(typeof(GameManagement));
 	}
 
 	// Update is called once per frame
@@ -79,7 +82,7 @@ public class FoliaoInimigo : MonoBehaviour {
 
 	private void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Player") {
-			print ("Dano");
+			gameManagement.DiminuiCronometro(ReducaoTempo);
 		}
 	}
 }

@@ -6,18 +6,23 @@ public class Player : MonoBehaviour {
 
 	public Vector2 Speed = new Vector2 (10f, 5f);
 	public float JumpForce = 10f;
+	public float ModVelocidadeCerveja = 1f;
 	private Pista Pista;
 	private Rigidbody rgb;
 	private float startTime;
+	private float currentSpeed;
 	private Transform groundCheck;
+	private GameManagement gameManagement;
 	void Start () {
 		rgb =  GetComponent<Rigidbody>();
+		gameManagement = (GameManagement)FindObjectOfType(typeof(GameManagement));
 		groundCheck = GameObject.Find("GroundCheck").transform;
 		// Guarda os Objetos que identificas as faixas
 		GameObject pista = GameObject.FindGameObjectWithTag ("Pista");
 		Pista = (Pista)FindObjectOfType(typeof(Pista));
 		// Posiciona na Faixa Inicial
 		transform.position = new Vector3(transform.position.x,transform.position.y,Pista.GetPosZFaixaAtual());
+		currentSpeed = Speed.x;
 	}
 
 	void Update () {
@@ -44,12 +49,26 @@ public class Player : MonoBehaviour {
 	/// Movimenta o Player para frente e para Faixa ativa
 	/// </summary>
 	private void Moviment () {
+		//MOVIMENTO ENTRE FAIXAS - EIXO Z
 		float distanceTime = (Time.time - startTime)*Speed.y;
 		Vector3 movment = transform.position;
 		if (!PlayerInActiveSection ()) {
 			movment.z = Mathf.Lerp (transform.position.z, Pista.GetPosZFaixaAtual(), distanceTime);
 		}
-		movment.x = Mathf.Lerp(transform.position.x, transform.position.x + 1,Speed.x * Time.deltaTime);
+
+		//MOVIMENTO DE CORRIDA - EIXO X
+		if (gameManagement.CervejaAcumulada > 0)
+		{
+			if (gameManagement.EstaBebado())
+				currentSpeed = Speed.x - ModVelocidadeCerveja * 2;
+			else
+				currentSpeed = Speed.x + ModVelocidadeCerveja * gameManagement.CervejaAcumulada;
+		}
+		else
+		{
+			currentSpeed = Mathf.Lerp(currentSpeed, Speed.x, Time.deltaTime);
+		}
+		movment.x = Mathf.Lerp(transform.position.x, transform.position.x + 1,currentSpeed * Time.deltaTime);
 
 		transform.position = movment;
 	}

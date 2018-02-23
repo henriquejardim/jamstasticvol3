@@ -42,7 +42,7 @@ public class HUDManager : MonoBehaviour {
     }
 
     public void SetBeerTimer(float value) {
-        if (value > 0f) {
+        if (value <= 0f) {
             beerTimer.text = string.Empty;
             return;
         }

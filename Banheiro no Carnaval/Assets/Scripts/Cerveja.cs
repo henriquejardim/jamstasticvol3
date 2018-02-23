@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Cerveja : MonoBehaviour {
 
+	public int QtdCerveja = 1;
+	private GameManagement gameManagement;
 	// Use this for initialization
 	void Start () {
-		
+		gameManagement = (GameManagement)FindObjectOfType(typeof(GameManagement));		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	private void OnTriggerEnter(Collider other) {
+		if(other.name == "Player")
+		{
+			gameManagement.AddCerveja(QtdCerveja);
+			GameObject.Destroy(this.gameObject);
+		}
 	}
 }

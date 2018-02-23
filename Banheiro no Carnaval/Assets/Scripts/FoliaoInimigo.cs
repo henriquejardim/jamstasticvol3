@@ -38,7 +38,7 @@ public class FoliaoInimigo : MonoBehaviour {
 			IsActive = true;
 			startTime = Time.time;
 		}
-		gameManagement = (GameManagement)FindObjectOfType(typeof(GameManagement));
+		gameManagement = (GameManagement) FindObjectOfType (typeof (GameManagement));
 	}
 
 	// Update is called once per frame
@@ -58,7 +58,7 @@ public class FoliaoInimigo : MonoBehaviour {
 					if (pos.z == posTarget) {
 						startTime = Time.time;
 						followPoint = followPoint == 4 ? 1 : 4;
-						GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+						GetComponent<SpriteRenderer> ().flipX = !GetComponent<SpriteRenderer> ().flipX;
 					}
 					break;
 				case FoliaoType.AtravessaRua:
@@ -75,15 +75,19 @@ public class FoliaoInimigo : MonoBehaviour {
 		pos.y = transform.position.y; // mantem sempre na mesma altura 
 		transform.position = pos;
 
-		if (CanSwitch && Mathf.Abs(transform.position.x - player.transform.position.x) <= DistanceToSwitch)
-		{
+		if (CanSwitch && Mathf.Abs (transform.position.x - player.transform.position.x) <= DistanceToSwitch) {
 			Tipo = SwitchToType;
 		}
 	}
 
 	private void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Player") {
-			gameManagement.DiminuiCronometro(ReducaoTempo);
+			gameManagement.DiminuiCronometro (ReducaoTempo);
+			if (!gameManagement.EstaBebado ()) {
+				gameManagement.CervejaAcumulada = 0;
+				gameManagement.TemporizadorCerveja = 0;
+			}
+			GameObject.Destroy (this.gameObject);
 		}
 	}
 }

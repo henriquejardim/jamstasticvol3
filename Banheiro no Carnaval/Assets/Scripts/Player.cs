@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
 	private Pista Pista;
 	private Rigidbody rgb;
 	private float startTime;
-	private float currentSpeed;
+	[SerializeField]
+	private Vector2 currentSpeed;
 	private Transform groundCheck;
 	private GameManagement gameManagement;
 	void Start () {
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour {
 		Pista = (Pista)FindObjectOfType(typeof(Pista));
 		// Posiciona na Faixa Inicial
 		transform.position = new Vector3(transform.position.x,transform.position.y,Pista.GetPosZFaixaAtual());
-		currentSpeed = Speed.x;
+		currentSpeed = Speed;
 	}
 
 	void Update () {
@@ -49,26 +50,34 @@ public class Player : MonoBehaviour {
 	/// Movimenta o Player para frente e para Faixa ativa
 	/// </summary>
 	private void Moviment () {
+		if (gameManagement.CervejaAcumulada > 0)
+		{
+			if (gameManagement.EstaBebado())
+			{
+				currentSpeed.x = Speed.x - ModVelocidadeCerveja * 2;
+				currentSpeed.y = Speed.y - ModVelocidadeCerveja * 2;
+			}
+			else
+			{
+				currentSpeed.x = Speed.x + ModVelocidadeCerveja * gameManagement.CervejaAcumulada;
+				currentSpeed.y = Speed.y + ModVelocidadeCerveja * gameManagement.CervejaAcumulada;
+			}
+		}
+		else
+		{
+			currentSpeed.x = Mathf.Lerp(currentSpeed.x, Speed.x, 2 * Time.deltaTime);
+			currentSpeed.y = Mathf.Lerp(currentSpeed.y, Speed.y, 2 * Time.deltaTime);
+		}
 		//MOVIMENTO ENTRE FAIXAS - EIXO Z
-		float distanceTime = (Time.time - startTime)*Speed.y;
+		float distanceTime = (Time.time - startTime)*currentSpeed.y;
 		Vector3 movment = transform.position;
 		if (!PlayerInActiveSection ()) {
 			movment.z = Mathf.Lerp (transform.position.z, Pista.GetPosZFaixaAtual(), distanceTime);
 		}
 
 		//MOVIMENTO DE CORRIDA - EIXO X
-		if (gameManagement.CervejaAcumulada > 0)
-		{
-			if (gameManagement.EstaBebado())
-				currentSpeed = Speed.x - ModVelocidadeCerveja * 2;
-			else
-				currentSpeed = Speed.x + ModVelocidadeCerveja * gameManagement.CervejaAcumulada;
-		}
-		else
-		{
-			currentSpeed = Mathf.Lerp(currentSpeed, Speed.x, Time.deltaTime);
-		}
-		movment.x = Mathf.Lerp(transform.position.x, transform.position.x + 1,currentSpeed * Time.deltaTime);
+		
+		movment.x = Mathf.Lerp(transform.position.x, transform.position.x + 1,currentSpeed.x * Time.deltaTime);
 
 		transform.position = movment;
 	}

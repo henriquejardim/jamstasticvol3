@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pista
   - FoliaoInimigo
+  - HUD
   layers:
   - Default
   - TransparentFX

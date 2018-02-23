@@ -47,6 +47,7 @@ public class FoliaoInimigo : MonoBehaviour {
 			float ditance = Mathf.Abs (player.transform.position.x - transform.position.x + Random.Range (-ModifierRandom, ModifierRandom));
 			IsActive = ditance <= DistanceToActive;
 		}
+
 		Vector3 pos = transform.position;
 		if (IsActive) {
 			switch (Tipo) {

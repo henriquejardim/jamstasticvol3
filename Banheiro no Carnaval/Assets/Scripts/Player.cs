@@ -14,10 +14,13 @@ public class Player : MonoBehaviour {
 	private Vector2 currentSpeed;
 	private Transform groundCheck;
 	private GameManagement gameManagement;
+
+
 	void Start () {
 		rgb =  GetComponent<Rigidbody>();
 		gameManagement = (GameManagement)FindObjectOfType(typeof(GameManagement));
 		groundCheck = GameObject.Find("GroundCheck").transform;
+
 		// Guarda os Objetos que identificas as faixas
 		GameObject pista = GameObject.FindGameObjectWithTag ("Pista");
 		Pista = (Pista)FindObjectOfType(typeof(Pista));

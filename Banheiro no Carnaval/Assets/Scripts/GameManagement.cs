@@ -28,8 +28,9 @@ public class GameManagement : MonoBehaviour {
 
     #region Private Members
 
-    #endregion
     private HUDManager hud;
+
+    #endregion
 
     void Start () {
         hud = GameObject.FindGameObjectWithTag ("HUD").GetComponent<HUDManager> ();

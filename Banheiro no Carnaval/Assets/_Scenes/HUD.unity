@@ -397,12 +397,17 @@ Prefab:
     - target: {fileID: 224407128437768780, guid: 4c8f34fd7014c774fb236416d9094377,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 322.5
+      value: 454
       objectReference: {fileID: 0}
     - target: {fileID: 224407128437768780, guid: 4c8f34fd7014c774fb236416d9094377,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 201.5
+      value: 255.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114032847391707136, guid: 4c8f34fd7014c774fb236416d9094377,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c8f34fd7014c774fb236416d9094377, type: 2}

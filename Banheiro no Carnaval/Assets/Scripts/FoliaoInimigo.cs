@@ -83,10 +83,6 @@ public class FoliaoInimigo : MonoBehaviour {
 	private void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Player") {
 			gameManagement.DiminuiCronometro (ReducaoTempo);
-			if (!gameManagement.EstaBebado ()) {
-				gameManagement.CervejaAcumulada = 0;
-				gameManagement.TemporizadorCerveja = 0;
-			}
 			GameObject.Destroy (this.gameObject);
 		}
 	}

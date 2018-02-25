@@ -23,17 +23,24 @@ public class GameManagement : MonoBehaviour {
     public float TempoDuracaoCerveja = 2f; //Tempo de duração do efeito por cerveja  antes de começar a decair - embreagado usa o dobro do valor
 
     public float TemporizadorCerveja; //Tempo restante do efeito da cerveja
+    public float MetrosRestantes;
     public bool IsDead; //Indica se o jogador perdeu
+    public bool TerminouFase;
     #endregion
 
     #region Private Members
 
+    private Transform player;
+    private Transform final;
     private HUDManager hud;
 
     #endregion
 
+
     void Start () {
         hud = GameObject.FindGameObjectWithTag ("HUD").GetComponent<HUDManager> ();
+        player = GameObject.Find ("Player").transform;
+        final = GameObject.FindGameObjectWithTag ("Final").transform;
         //AddCerveja (2);
     }
 
@@ -60,12 +67,12 @@ public class GameManagement : MonoBehaviour {
         }
         Cronometro = Cronometro < 0 ? 0 : Cronometro;
         Pipibar = Pipibar < 0 ? 0 : Pipibar;
-
+        MetrosRestantes = final.transform.position.x - player.transform.position.x;
+        MetrosRestantes = MetrosRestantes < 0 ? 0 : MetrosRestantes;
         UpdateHud ();
-        if (IsDead)
-        {
+        if (IsDead) {
             Time.timeScale = 0;
-            print("Game Over");
+            print ("Game Over");
         }
     }
 
@@ -76,6 +83,7 @@ public class GameManagement : MonoBehaviour {
         hud.SetPipiBar (Pipibar);
         hud.SetBeerCount (CervejaAcumulada);
         hud.SetBeerTimer (TemporizadorCerveja);
+        hud.SetMeter(MetrosRestantes);
     }
 
     public void AddCerveja (int cerveja) {

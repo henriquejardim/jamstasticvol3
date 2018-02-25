@@ -27,6 +27,7 @@ public class Cerveja : MonoBehaviour {
 				audioCerveja.pitch = audioCerveja.pitch/2;
 
 			audioCerveja.Play();
+			GetComponent<CapsuleCollider>().enabled = false;
 			GetComponent<MeshRenderer>().enabled = false;
 			FoiBebida = true;			
 		}

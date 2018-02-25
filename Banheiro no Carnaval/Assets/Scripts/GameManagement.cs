@@ -92,7 +92,7 @@ public class GameManagement : MonoBehaviour {
         if (CervejaAcumulada <= MaximoCerveja)
             TemporizadorCerveja = TempoDuracaoCerveja;
         else
-            TemporizadorCerveja = TempoDuracaoCerveja * 2;
+            TemporizadorCerveja = TempoDuracaoCerveja * 1.5F;
 
         //quanto mais cervejas acumuladas maior é o dano à PipiBar
         Pipibar += (PipiPorCerveja * CervejaAcumulada);

@@ -83,6 +83,7 @@ public class FoliaoInimigo : MonoBehaviour {
 	private void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Player") {
 			gameManagement.DiminuiCronometro (ReducaoTempo);
+			GetComponent<CapsuleCollider>().enabled = false;
 			GameObject.Destroy (this.gameObject);
 		}
 	}

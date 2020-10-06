@@ -41,7 +41,7 @@ public class GameManagement : MonoBehaviour {
         hud = GameObject.FindGameObjectWithTag ("HUD").GetComponent<HUDManager> ();
         player = GameObject.Find ("Player").transform;
         final = GameObject.FindGameObjectWithTag ("Final").transform;
-        //AddCerveja (2);
+        AddCerveja (2);
     }
 
     // Update is called once per frame
@@ -67,8 +67,12 @@ public class GameManagement : MonoBehaviour {
         }
         Cronometro = Cronometro < 0 ? 0 : Cronometro;
         Pipibar = Pipibar < 0 ? 0 : Pipibar;
-        MetrosRestantes = final.transform.position.x - player.transform.position.x;
-        MetrosRestantes = MetrosRestantes < 0 ? 0 : MetrosRestantes;
+
+        if(final != null && player != null) {
+            MetrosRestantes = final.transform.position.x - player.transform.position.x;
+            MetrosRestantes = MetrosRestantes < 0 ? 0 : MetrosRestantes;
+        }
+
         UpdateHud ();
         if (IsDead) {
             Time.timeScale = 0;
